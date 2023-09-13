@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Enrollement Form</title>
+</head>
+<body>
+    <form  name="myform" action="student.php" method="post">
+        <table>
+            <tr>
+                <td>Student Name :</td>
+                <td><input type="text" name="studentname" required></td>
+            </tr>
+            <tr>
+                <td>Student Registration Number :</td>
+                <td><input type="text" name="registernumber" required></td>
+            </tr>
+            <tr>
+                <td>Student Contact Number :</td>
+                <td><input type="text" name="contactnumber" required></td>
+            </tr>
+            <tr>
+                <td>Student Year :</td>
+                <td><input type="number" name="year" required></td>
+            </tr>
+            <tr>
+                <td><label for="subjects">Select Stream:</label></td>
+                <td>
+                    <select id="subjects" name="selectedstream">
+                        <option value="1">stream 01</option>
+                        <option value="2">stream 02</option>
+                        <option value="3">stream 03</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label>Select Subject:</label></td>
+                <td>
+                    <div id="subjectCheckboxes" name="">
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <input type="submit" value="Submit">
+    </form>
+
+    <script>
+        const streamSelect = document.getElementById('subjects');
+        const subjectCheckboxes = document.getElementById('subjectCheckboxes');
+    
+        const streambooks = {
+            1: ["Test Subject 01", "Test Subject 02", "Test Subject 03"],
+            2: ["Test Subject 04", "Test Subject 05", "Test Subject 06"],
+            3: ["Test Subject 07", "Test Subject 08", "Test Subject 09"],
+        };
+    
+        streamSelect.addEventListener('change', () => {
+            const selectedStream = streamSelect.value;
+            const subjects = streambooks[selectedStream];
+    
+            subjectCheckboxes.innerHTML = '';
+    
+            for (let i = 0; i < subjects.length; i++) {
+                const subject = subjects[i];
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.name = 'selectedSubjects[]';
+                checkbox.value = i + 1; 
+                checkbox.id = `book_${subject.replace(/\s/g, '_')}`;
+                
+                const label = document.createElement('label');
+                label.textContent = subject;
+                label.htmlFor = checkbox.id;
+    
+                subjectCheckboxes.appendChild(checkbox);
+                subjectCheckboxes.appendChild(label);
+                subjectCheckboxes.appendChild(document.createElement('br'));
+            }
+        });
+    </script>
+</body>
+</html>
